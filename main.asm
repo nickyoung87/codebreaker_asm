@@ -8,7 +8,7 @@ section .data
 	guessStr db "Enter your guess", 0x0A, 0
 	guessStrLen equ $-guessStr
 
-	guessResultStr db "Here is the result of your guess", 0x0A, 0
+	guessResultStr db "Here is the result of your guess (1 = correct, 0 = incorrect)", 0x0A, 0
 	guessResultStrLen equ $-guessResultStr
 
 	winnerStr db "Congratulations! You got it right!", 0x0A, 0
@@ -102,25 +102,25 @@ check_loop:
 
 guess_result:
 	; Print the guess result
-	MOV eax, 4
-	MOV ebx, 1
-	MOV ecx, guessResultStr
-	MOV edx, guessResultStrLen
-	INT 0x80
+	; MOV eax, 4
+	; MOV ebx, 1
+	; MOV ecx, guessResultStr
+	; MOV edx, guessResultStrLen
+	; INT 0x80
 
 	; Print the actual result
-	MOV eax, 4
-	MOV ebx, 1
-	MOV ecx, checkGuess
-	MOV edx, 8
-	INT 0x80
+	; MOV eax, 4
+	; MOV ebx, 1
+	; MOV ecx, checkGuess
+	; MOV edx, 8
+	; INT 0x80
 
 	; Print a newline
-	MOV eax, 4
-	MOV ebx, 1
-	MOV ecx, newline
-	MOV edx, 1
-	INT 0x80
+	; MOV eax, 4
+	; MOV ebx, 1
+	; MOV ecx, newline
+	; MOV edx, 1
+	; INT 0x80
 
 	; Now we need to see if they actually won
 	MOV esi, 0
@@ -150,6 +150,25 @@ try_again:
 	MOV ebx, 1
 	MOV ecx, tryAgainStr
 	MOV edx, tryAgainStrLen
+	INT 0x80
+
+	; Result of the guess
+	MOV eax, 4
+	MOV ebx, 1
+	MOV ecx, guessResultStr
+	MOV edx, guessResultStrLen
+	INT 0x80
+
+	MOV eax, 4
+	MOV ebx, 1
+	MOV ecx, checkGuess
+	MOV edx, 8
+	INT 0x80
+
+	MOV eax, 4
+	MOV ebx, 1
+	MOV ecx, newline
+	MOV edx, 1
 	INT 0x80
 
 	JMP game_loop
